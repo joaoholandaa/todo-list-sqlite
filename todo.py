@@ -22,6 +22,15 @@ class ToDo:
       ]
     )
 
-    self.page.add(input_bar)
+    tabs = ft.Tabs(
+      selected_index=0,
+      tabs=[
+        ft.Tab(text='Todos'), 
+        ft.Tab(text='Em andamento'),
+        ft.Tab(text='Finalizados')
+      ]
+    )
+
+    self.page.add(input_bar, tabs)
     
 ft.app(target=ToDo)
