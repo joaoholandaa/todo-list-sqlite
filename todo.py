@@ -1,4 +1,5 @@
 import flet as ft
+import sqlite3
 
 class ToDo:
   
@@ -10,7 +11,15 @@ class ToDo:
     self.page.window_resizable = False
     self.page.window_always_on_top = True
     self.page.title = 'ToDo App'
+    self.db_execute('CREATE TABLE IF NOT EXISTS tasks(name, status)')
     self.main_page()
+
+  def db_execute(self, query, params = []):
+    with sqlite3.connect('database.db') as con:
+      cur = con.cursor()
+      cur.execute(query, params)
+      con.commit()
+      return cur.fetchall()
 
   def tasks_container(self):
     return ft.Container(
