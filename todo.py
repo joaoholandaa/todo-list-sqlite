@@ -11,6 +11,7 @@ class ToDo:
     self.page.window_resizable = False
     self.page.window_always_on_top = True
     self.page.title = 'ToDo App'
+    self.task = ''
     self.db_execute('CREATE TABLE IF NOT EXISTS tasks(name, status)')
     self.main_page()
 
@@ -31,13 +32,29 @@ class ToDo:
       )
     )
 
+  def set_value(self, e):
+    self.task = e.control.value
+
+  def add(self, e, input_task):
+    name = self.task
+    status = 'incomplete'
+
+    if name:
+      self.db_execute(query='INSERT INTO tasks VALUES(?,?)', params=[name, status])
+      input_task.value = ''
+
   def main_page(self):
-    input_task = ft.TextField(hint_text='Digite aqui uma tarefa', expand=True)
+    input_task = ft.TextField(
+      hint_text='Digite aqui uma tarefa', 
+      expand=True, 
+      on_change=self.set_value)
 
     input_bar = ft.Row(
       controls=[
         input_task,
-        ft.FloatingActionButton(icon=ft.icons.ADD)
+        ft.FloatingActionButton(
+          icon=ft.icons.ADD,
+          on_click=lambda e: self.add(e, input_task))
       ]
     )
 
