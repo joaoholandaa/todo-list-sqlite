@@ -13,6 +13,15 @@ class ToDo:
     self.main_page()
 
   def main_page(self):
-    pass
+    input_task = ft.TextField(hint_text='Digite aqui uma tarefa', expand=True)
 
+    input_bar = ft.Row(
+      controls=[
+        input_task,
+        ft.FloatingActionButton(icon=ft.icons.ADD)
+      ]
+    )
+
+    self.page.add(input_bar)
+    
 ft.app(target=ToDo)
